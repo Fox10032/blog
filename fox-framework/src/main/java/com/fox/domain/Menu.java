@@ -6,13 +6,10 @@ import java.util.Date;
 import java.io.Serializable;
 import java.util.List;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.experimental.Accessors;
 
 @SuppressWarnings("serial")
@@ -22,6 +19,7 @@ import lombok.experimental.Accessors;
 @TableName("sys_menu")
 @Accessors(chain = true) //允许链式编程
 public class Menu  {
+
     //菜单ID
     @TableId
     private Long id;

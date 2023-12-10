@@ -115,7 +115,7 @@ export function praseStrEmpty(str) {
 export function mergeRecursive(source, target) {
   for (var p in target) {
     try {
-      if (target[p].constructor == Object) {
+      if (target[p].constructor == Object) {// eslint-disable-line
         source[p] = mergeRecursive(source[p], target[p])
       } else {
         source[p] = target[p]
@@ -147,7 +147,7 @@ export function handleTree(data, id, parentId, children) {
 
   for (const d of data) {
     const parentId = d[config.parentId]
-    if (childrenListMap[parentId] == null) {
+    if (childrenListMap[parentId] == null) {// eslint-disable-line
       childrenListMap[parentId] = []
     }
     nodeIds[d[config.id]] = d
@@ -156,7 +156,7 @@ export function handleTree(data, id, parentId, children) {
 
   for (const d of data) {
     const parentId = d[config.parentId]
-    if (nodeIds[parentId] == null) {
+    if (nodeIds[parentId] == null) {// eslint-disable-line
       tree.push(d)
     }
   }

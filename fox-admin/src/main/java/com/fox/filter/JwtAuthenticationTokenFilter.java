@@ -41,14 +41,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
             return;
         }
-        //JwtUtil是我们在huanf-framework工程写的工具类。解析获取的token，把原来的密文解析为原文
+        //JwtUtil是我们在fox-framework工程写的工具类。解析获取的token，把原来的密文解析为原文
         Claims claims = null;
         try {
             claims = JwtUtil.parseJWT(token);
         } catch (Exception e) {
             //当token过期或token被篡改就会进入下面那行的异常处理
             e.printStackTrace();
-            //报异常之后，把异常响应给前端，需要重新登录。ResponseResult、AppHttpCodeEnum、WebUtils是我们在huanf-framework工程写的类
+            //报异常之后，把异常响应给前端，需要重新登录。ResponseResult、AppHttpCodeEnum、WebUtils是我们在fox-framework工程写的类
             ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
             WebUtils.renderString(response, JSON.toJSONString(result));
             return;

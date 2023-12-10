@@ -3,6 +3,7 @@ package com.fox.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fox.domain.ResponseResult;
 import com.fox.domain.Role;
+import com.fox.domain.User;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface RoleService extends IService<Role> {
 
     //修改用户-①根据id查询用户信息
     List<Long> selectRoleIdByUserId(Long userId);
+
+
 }

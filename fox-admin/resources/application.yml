@@ -14,6 +14,7 @@ spring:
       max-file-size: 20MB
       # HTTP请求中包含的所有文件的总大小的最大允许值
       max-request-size: 20MB
+ 
 
 mybatis-plus:
   configuration:
@@ -25,8 +26,8 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
-# 打开七牛云，找到密钥管理，把相关信息填写到下面3行，会被huanf-blog工程的OOSTest类获取
+# 打开七牛云，找到密钥管理，把相关信息填写到下面3行，会被fox-blog工程的OOSTest类获取
 myoss:
-  xxaccessKey:9DB7kGf_5iH2YM3IeeTnZNUQXseSKM5DOToGRU1p
-  xxsecretKey:FyTtIcmuRA32G8jkLXDhA6t70s61iHpsO1ONB1t0
-  xxbucket: fox-blog
+  xxaccessKey: 9DB7kGf_5iH2YM3IeeTnZNUQXseSKM5DOToGRU1p
+  xxsecretKey: FyTtIcmuRA32G8jkLXDhA6t70s61iHpsO1ONB1t0
+  xxbucket: fox-blog10032

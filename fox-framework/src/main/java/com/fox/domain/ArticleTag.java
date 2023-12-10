@@ -1,5 +1,7 @@
 package com.fox.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 //新增博客文章
 public class ArticleTag implements Serializable {
+
     private static final long serialVersionUID = 625337492348897098L;
 
     /**

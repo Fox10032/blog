@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     @Autowired
-    //操作数据库。ArticleService是我们在huanf-framework工程写的接口
+    //操作数据库。ArticleService是我们在fox-framework工程写的接口
     private ArticleService articleService;
 
 

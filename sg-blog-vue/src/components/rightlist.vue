@@ -12,11 +12,11 @@
           alt=""
         />
         <h1 v-if="this.$store.state.themeObj.user_start != 0">
-          <span>请别再呼唤我为孤独之人</span>
+          <span>My Blog</span>
         </h1>
       </div>
       <div class="r1-body">
-        <p>三更</p>
+        <p>Fox</p>
         <div class="catch-me">
           <div class="">
             <el-tooltip class="item" content="Github" placement="top">

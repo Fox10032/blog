@@ -41,4 +41,4 @@ mybatis-plus:
       myoss:
         xxaccessKey: 9DB7kGf_5iH2YM3IeeTnZNUQXseSKM5DOToGRU1p
         xxsecretKey: FyTtIcmuRA32G8jkLXDhA6t70s61iHpsO1ONB1t0
-        xxbucket: fox-blog
+        xxbucket: fox-blog10032

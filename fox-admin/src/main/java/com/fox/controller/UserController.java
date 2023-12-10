@@ -4,6 +4,8 @@ package com.fox.controller;
 import com.fox.domain.ResponseResult;
 import com.fox.domain.Role;
 import com.fox.domain.User;
+import com.fox.dto.ChangeRoleStatusDto;
+import com.fox.dto.ChangeUserStatusDto;
 import com.fox.enums.AppHttpCodeEnum;
 import com.fox.exception.SystemException;
 import com.fox.service.RoleService;
@@ -79,5 +81,14 @@ public class UserController {
     public ResponseResult edit(@RequestBody User user) {
         userService.updateUser(user);
         return ResponseResult.okResult();
+    }
+    //-----------------------------修改用户的状态--------------------------------------
+
+    @PutMapping("/changeStatus")
+    public ResponseResult changeStatus(@RequestBody ChangeUserStatusDto userStatusDto){
+        User user = new User();
+        user.setId(userStatusDto.getUserId());
+        user.setStatus(userStatusDto.getStatus());
+        return ResponseResult.okResult(userService.updateById(user));
     }
 }

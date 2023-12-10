@@ -4,13 +4,10 @@ import java.util.Date;
 
 import java.io.Serializable;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 
 @SuppressWarnings("serial")
 @Data
@@ -19,6 +16,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("sys_role")
 public class Role  {
     //角色ID@TableId
+
     private Long id;
 
     //角色名称

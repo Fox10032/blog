@@ -48,9 +48,9 @@ public class LoginController {
     //---------------------------查询(超级管理员|非超级管理员)的权限和角色信息-----------------------------
 
     @GetMapping("/getInfo")
-    //AdminUserInfoVo是我们在huanf-framework工程写的类
+    //AdminUserInfoVo是我们在fox-framework工程写的类
     public ResponseResult<AdminUserInfoVo> getInfo(){
-        //获取当前登录的用户。SecurityUtils是我们在huanf-framework写的类
+        //获取当前登录的用户。SecurityUtils是我们在fox-framework写的类
         LoginUser loginUser = SecurityUtils.getLoginUser();
         //根据用户id查询权限信息
         List<String> perms = menuService.selectPermsByUserId(loginUser.getUser().getId());
@@ -59,7 +59,7 @@ public class LoginController {
 
         //获取用户信息
         User user = loginUser.getUser();
-        //BeanCopyUtils是我们在huanf-framework写的类
+        //BeanCopyUtils是我们在fox-framework写的类
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
 
         //封装响应返回
@@ -70,7 +70,7 @@ public class LoginController {
     //-------------------------------------查询路由信息(权限菜单)--------------------------------------
 
     @GetMapping("/getRouters")
-    //RoutersVo是我们在huanf-framework工程写的类
+    //RoutersVo是我们在fox-framework工程写的类
     public ResponseResult<RoutersVo> getRouters(){
         //获取用户id
         Long userId = SecurityUtils.getUserId();
