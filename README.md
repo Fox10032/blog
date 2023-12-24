@@ -23,7 +23,7 @@
 | 开发环境     | 版本    |
 | ------------ | ------- |
 | JDK          | 8       |
-| MySQL        | 8.0.    |
+| MySQL        | 8.0.29  |
 | Redis        | 5.0.14  |
 | Node         | 14.21.3 |
 | Windows      | 10      |
@@ -31,6 +31,19 @@
 | Npm          | 6.14.18 |
 | SpringBoot   | 2.5.0   |
 | Mybatis-plus | 3.5.2   |
+
+**部署环境**
+
+| 开发环境 | 版本                  |
+| -------- | --------------------- |
+| JDK      | 8                     |
+| MySQL    | 8.0.29                |
+| Redis    | 5.0.14                |
+| Nginx    | 1.18.0                |
+| Docker   | 24.0.7                |
+| 服务器   | 云服务器ECS（阿里云） |
+| 操作系统 | CentOS  7.6 64位      |
+| CPU&内存 | 2核(vCPU) 4 GiB       |
 
 ## 博客前台模块
 
@@ -209,4 +222,102 @@ AOP中的通知方法有五种，如下
   （22）0 15 10 ? * 6#3   每月的第三个星期五上午10:15触发
 
 
+创建MySQL容器：`docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=yourpassword -d mysql`
 
+## **[mysql docker容器中导入数据库失败 Failed to open file ‘‘.sql‘‘, error: 2](https://www.cnblogs.com/yyhhblog/p/17805344.html)**
+
+**mysql docker 容器中导入数据库失败**
+
+```
+docker run -d -e MYSQL_ROOT_PASSWORD=123456 --name mydata-mysql-1 -d -p 13307:3306 -v mysql_data1:/var/lib/mysql -v /usr/local/docker/mysql8.0.29/log:/var/log/ mysql:8.0.29创建Mysql容器**
+
+docker exec -it xxxxxxxxx sh 进入mysql容器。
+mysql -uroot -pxxxx 登陆
+use database； 切换数据库
+source /home/xxxx.sql 导入数据库文件
+```
+
+Error：
+Failed to open file ‘‘xxx.sql’’, error: 2
+
+查了网上资料，好多都是试试路径 把/变成 \试试 pass不行！
+什么绝对路径 相对路径 pass 注意是linux！！！
+
+```
+首先
+sudo docker ps //查看mysql容器id
+sudo docker cp sql文件路径 mysql容器id:/ 注意 linux中后面要加上:/
+
+再次进入mysql容器
+docker exec -it 容器ID bash 
+mysql -u root -p123456
+
+切换数据库
+use sg_blog;
+ 运行 source xxxx.sql；*注意这里sql文件不用加路径 *
+成功！
+```
+
+**【containerd错误解决系列】failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: error during container init: error mounting "/app/mysql/conf/my.cnf" to rootfs at "/etc/my.cnf": mount /app/mysql/conf/my.cnf:/etc/my.cnf (via /proc/self/fd/6), flags: 0x5000: not a directory: unknown: Are you trying to mount a directory onto a file (or vice-versa)? Check if the specified host path exists and is the expected type**
+
+```
+ rpm -qa | grep libseccomp  //查看libseccomp版本
+
+runc -version  
+
+*sudo rpm -e libseccomp-2.3.3-3.el8.x86_64 --nodeps*  //卸载低版本libseccomp
+```
+
+安装高版本的libseccomp第一种方式：
+
+```
+ *yum provides libseccomp*  //安装高版本libseccomp
+
+*yum install libseccomp-2.5.2-1.el8.x86_64*
+```
+
+第二钟方式：
+
+```
+在网站 [rpmfind.net](http://rpmfind.net/linux/rpm2html/search.php?query=libseccomp&submit=Search ...) 找到对应系统版本最新版本安装包""下载后传到服务器
+
+http://rpmfind.net/linux/rpm2html/search.php?query=libseccomp&submit=Search%20...
+
+ rpm -ivh libseccomp-2.5.2-1.el8.x86_64.rpm  //安装下载依赖包
+
+rpm  -qa |grep libseccomp  //查看是否成功
+```
+
+
+
+### 解决原理
+
+```
+libseccomp需要高于`2.4版本`
+
+containerd.io 要求安装版本为 2.4.0 的 libseccomp
+```
+
+# Mysql：Forcing close of thread xxx user: ‘root‘ 的解决方法
+
+去看mysql的errorlog，看到如下的信息：
+
+Forcing close of thread xxxxx user: ‘root’
+
+百度之后
+
+发现这算属MySQL的一个bug，不管连接是通过hosts还是ip的方式，MySQL都会对DNS做反查，IP到DNS，由于反查的接续速度过慢（不管是不是isp提供的dns服务器的问题或者其他原因），大量的查询就难以应付，线程不够用就使劲增加线程，但是却得不到释放，所以MySQL会“ 假死”。
+
+解决的方案很简单，结束这个反查的过程，禁止任何解析。
+
+linux 打开mysql的配置文件（my.cnf），在[mysqld]下面增加一行：
+
+skip-name-resolve
+
+window 在my.ini添加的内容:
+
+skip-locking
+
+skip-name-resolve
+
+重启MySQL即可
